@@ -14,41 +14,74 @@
       <p class="subtitle">Ngũ Hành tương sinh — code cho hợp tuổi, hợp mệnh.</p>
     </header>
 
-    <section class="figure">
-      <figure>
-        <img
-          src="assets/ngon-ngu-lap-trinh-phong-thuy.png"
-          alt="Sơ đồ phong thuỷ ngôn ngữ lập trình theo Ngũ Hành"
-        />
-        <figcaption>Sơ đồ ngôn ngữ lập trình xếp theo Ngũ Hành.</figcaption>
-      </figure>
+    <div class="mode-toggle" role="tablist" aria-label="Chế độ hiển thị">
+      <button type="button" role="tab" id="tab-classic" data-mode="classic"
+              aria-controls="panel-classic" aria-selected="true" tabindex="0">
+        Cổ điển (bài gốc)
+      </button>
+      <button type="button" role="tab" id="tab-modern" data-mode="modern"
+              aria-controls="panel-modern" aria-selected="false" tabindex="-1">
+        Hiện đại (tự phân loại)
+      </button>
+    </div>
+
+    <section id="panel-classic" role="tabpanel" aria-labelledby="tab-classic">
+      <section class="figure">
+        <figure>
+          <img
+            src="assets/ngon-ngu-lap-trinh-phong-thuy.png"
+            alt="Sơ đồ phong thuỷ ngôn ngữ lập trình theo Ngũ Hành"
+          />
+          <figcaption>Sơ đồ ngôn ngữ lập trình xếp theo Ngũ Hành.</figcaption>
+        </figure>
+      </section>
+
+      <section class="elements">
+        <h2>Ngũ Hành &amp; ngôn ngữ <small class="mode-tag">(theo bài gốc, 2018)</small></h2>
+        <div class="grid">
+          <article class="card kim">
+            <h3>KIM</h3>
+            <p>JavaScript, Objective-C, Python</p>
+          </article>
+          <article class="card thuy">
+            <h3>THUỶ</h3>
+            <p>C#, PHP</p>
+          </article>
+          <article class="card moc">
+            <h3>MỘC</h3>
+            <p>Android, C#</p>
+          </article>
+          <article class="card hoa">
+            <h3>HOẢ</h3>
+            <p>Scala, HTML5, Java, Node.js</p>
+          </article>
+          <article class="card tho">
+            <h3>THỔ</h3>
+            <p>JavaScript, Go, Ruby</p>
+          </article>
+        </div>
+        <p class="disclaimer">* Bảng phân loại mang tính giải trí, lấy từ ảnh gốc.</p>
+      </section>
     </section>
 
-    <section class="elements">
-      <h2>Ngũ Hành &amp; ngôn ngữ</h2>
-      <div class="grid">
-        <article class="card kim">
-          <h3>KIM</h3>
-          <p>JavaScript, Objective-C, Python</p>
-        </article>
-        <article class="card thuy">
-          <h3>THUỶ</h3>
-          <p>C#, PHP</p>
-        </article>
-        <article class="card moc">
-          <h3>MỘC</h3>
-          <p>Android, C#</p>
-        </article>
-        <article class="card hoa">
-          <h3>HOẢ</h3>
-          <p>Scala, HTML5, Java, Node.js</p>
-        </article>
-        <article class="card tho">
-          <h3>THỔ</h3>
-          <p>JavaScript, Go, Ruby</p>
-        </article>
-      </div>
-      <p class="disclaimer">* Bảng phân loại mang tính giải trí, lấy từ ảnh gốc.</p>
+    <section id="panel-modern" role="tabpanel" aria-labelledby="tab-modern" hidden>
+      <section class="elements">
+        <h2>Ngũ Hành &amp; ngôn ngữ <small class="mode-tag">(tự phân loại theo màu GitHub)</small></h2>
+        <div class="grid" id="element-grid"></div>
+        <p class="legend"></p>
+        <details id="debug-panel" hidden></details>
+        <p class="disclaimer">* Phân loại tự động theo màu chính thức GitHub Linguist + quy tắc HSL.</p>
+      </section>
+      <details class="original-image">
+        <summary>Ảnh gốc</summary>
+        <figure>
+          <img
+            src="assets/ngon-ngu-lap-trinh-phong-thuy.png"
+            alt="Sơ đồ phong thuỷ ngôn ngữ lập trình theo Ngũ Hành"
+          />
+          <figcaption>Sơ đồ ngôn ngữ lập trình xếp theo Ngũ Hành.</figcaption>
+        </figure>
+      </details>
     </section>
 
     <footer class="credit">
@@ -73,5 +106,7 @@
       <p class="note">Trang này chỉ dùng cho mục đích trình bày lại nội dung, mọi quyền thuộc về tác giả gốc.</p>
     </footer>
   </main>
+  <script type="module" src="./js/mode-toggle.js"></script>
+  <script type="module" src="./js/main.js"></script>
 </body>
 </html>

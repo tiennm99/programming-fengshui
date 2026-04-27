@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>classify-element test harness</title>
+  <style>
+    body { font: 14px/1.5 system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { font-size: 1.2rem; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.15rem 0; font-family: monospace; }
+    li.pass { background: #e3f8e0; color: #155724; }
+    li.fail { background: #fde2e2; color: #721c24; }
+    .summary { font-weight: bold; margin: 1rem 0; padding: 0.6rem 1rem; border-radius: 6px; }
+    .summary.ok { background: #d4edda; color: #155724; }
+    .summary.bad { background: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+  <h1>classify-element test harness</h1>
+  <div id="summary" class="summary"></div>
+  <ul id="results"></ul>
+
+  <script type="module">
+    import { classify } from './classify-element.js';
+
+    // 12 sample languages from report §3 + 10 edge cases from report §4
+    const cases = [
+      // sample languages
+      { hex: '#f1e05a', expected: 'tho',  label: 'JavaScript' },
+      { hex: '#3572A5', expected: 'thuy', label: 'Python' },
+      { hex: '#dea584', expected: 'tho',  label: 'Rust (tan, S<60 → tho per [20,40) tip)' },
+      { hex: '#00ADD8', expected: 'moc',  label: 'Go (cyan H~192, in [70,200) range)' },
+      { hex: '#701516', expected: 'hoa',  label: 'Ruby' },
+      { hex: '#b07219', expected: 'tho',  label: 'Java (orange-brown, L<50 → tho per [20,40) tip)' },
+      { hex: '#178600', expected: 'moc',  label: 'C#' },
+      { hex: '#3178c6', expected: 'thuy', label: 'TypeScript' },
+      { hex: '#4F5D95', expected: 'thuy', label: 'PHP' },
+      { hex: '#F05138', expected: 'hoa',  label: 'Swift' },
+      { hex: '#A97BFF', expected: 'hoa',  label: 'Kotlin' },
+      { hex: '#e34c26', expected: 'hoa',  label: 'HTML' },
+      // edge cases
+      { hex: '#FFFFFF', expected: 'kim',  label: 'pure white (grayscale L≥70)' },
+      { hex: '#000000', expected: 'thuy', label: 'pure black (grayscale L<20)' },
+      { hex: '#888888', expected: 'tho',  label: 'mid gray (grayscale 20≤L<70)' },
+      { hex: '#CCCCCC', expected: 'kim',  label: 'light gray' },
+      { hex: '#FFD700', expected: 'tho',  label: 'gold yellow (H~50)' },
+      { hex: '#FF8C00', expected: 'hoa',  label: 'bright orange (H~32, S≥60, L≥50)' },
+      { hex: '#A0522D', expected: 'hoa',  label: 'sienna (H~19, in [0,20) → hoa)' },
+      { hex: '#00BFFF', expected: 'moc',  label: 'deep sky blue (H~195 → moc)' },
+      { hex: '#1E90FF', expected: 'thuy', label: 'dodger blue (H~210)' },
+      { hex: '#FF00FF', expected: 'hoa',  label: 'magenta (H=300)' },
+    ];
+
+    const ul = document.getElementById('results');
+    let pass = 0;
+    for (const c of cases) {
+      let actual;
+      let ok;
+      try {
+        actual = classify(c.hex);
+        ok = actual === c.expected;
+      } catch (e) {
+        actual = `THROW: ${e.message}`;
+        ok = false;
+      }
+      const li = document.createElement('li');
+      li.className = ok ? 'pass' : 'fail';
+      li.textContent = `${ok ? 'PASS' : 'FAIL'}  ${c.hex}  expected=${c.expected}  actual=${actual}  (${c.label})`;
+      ul.appendChild(li);
+      if (ok) pass++;
+    }
+
+    const summary = document.getElementById('summary');
+    summary.className = 'summary ' + (pass === cases.length ? 'ok' : 'bad');
+    summary.textContent = `${pass} / ${cases.length} passed`;
+  </script>
+</body>
+</html>
