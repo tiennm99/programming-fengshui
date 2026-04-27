@@ -3,15 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lựa chọn ngôn ngữ lập trình theo phong thuỷ</title>
-  <meta name="description" content="Chọn ngôn ngữ lập trình theo Ngũ Hành: Kim, Mộc, Thuỷ, Hoả, Thổ — vui là chính." />
+  <title>Phong thuỷ ngôn ngữ lập trình — phân loại theo Ngũ Hành</title>
+  <meta
+    name="description"
+    content="Phân loại ngôn ngữ lập trình theo Ngũ Hành (Kim, Mộc, Thuỷ, Hoả, Thổ) dựa trên màu sắc của GitHub Linguist và GitLab Linguist, tập trung TIOBE Top 20."
+  />
+  <meta
+    name="keywords"
+    content="phong thuỷ, ngôn ngữ lập trình, ngũ hành, kim mộc thuỷ hoả thổ, GitHub Linguist, GitLab Linguist, TIOBE"
+  />
+  <meta name="author" content="tiennm99" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Phong thuỷ ngôn ngữ lập trình — phân loại theo Ngũ Hành" />
+  <meta
+    property="og:description"
+    content="Phân loại ngôn ngữ lập trình theo Ngũ Hành dựa trên màu Linguist (GitHub/GitLab), tập trung TIOBE Top 20."
+  />
+  <meta property="og:image" content="assets/ngon-ngu-lap-trinh-phong-thuy.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <a class="skip-link" href="#main-content">Bỏ qua tới nội dung chính</a>
   <main class="page" id="main-content">
     <header class="hero">
-      <h1>Lựa chọn ngôn ngữ lập trình theo phong thuỷ</h1>
+      <h1>Phong thuỷ ngôn ngữ lập trình</h1>
       <p class="subtitle">Ngũ Hành tương sinh — code cho hợp tuổi, hợp mệnh.</p>
       <div class="hero-ribbon" aria-hidden="true">
         <span class="r-kim"></span>
@@ -22,78 +38,30 @@
       </div>
     </header>
 
-    <div class="mode-toggle" role="tablist" aria-label="Chế độ hiển thị">
-      <button type="button" role="tab" id="tab-classic" data-mode="classic"
-              aria-controls="panel-classic" aria-selected="true" tabindex="0">
-        Cổ điển (bài gốc)
-      </button>
-      <button type="button" role="tab" id="tab-modern" data-mode="modern"
-              aria-controls="panel-modern" aria-selected="false" tabindex="-1">
-        Hiện đại (tự phân loại)
-      </button>
-    </div>
-
-    <section id="panel-classic" role="tabpanel" aria-labelledby="tab-classic">
-      <section class="figure">
-        <figure>
-          <img
-            src="assets/ngon-ngu-lap-trinh-phong-thuy.png"
-            alt="Sơ đồ phong thuỷ ngôn ngữ lập trình theo Ngũ Hành"
-          />
-          <figcaption>Sơ đồ ngôn ngữ lập trình xếp theo Ngũ Hành.</figcaption>
-        </figure>
-      </section>
-
-      <section class="elements">
-        <h2>Ngũ Hành &amp; ngôn ngữ <small class="mode-tag">(theo bài gốc, 2018)</small></h2>
-        <div class="grid">
-          <article class="card kim">
-            <h3>KIM</h3>
-            <p>JavaScript, Objective-C, Python</p>
-          </article>
-          <article class="card thuy">
-            <h3>THUỶ</h3>
-            <p>C++, CSS, PHP</p>
-          </article>
-          <article class="card moc">
-            <h3>MỘC</h3>
-            <p>Android, C#, Node.js</p>
-          </article>
-          <article class="card hoa">
-            <h3>HOẢ</h3>
-            <p>Java, HTML, Scala, Ruby</p>
-          </article>
-          <article class="card tho">
-            <h3>THỔ</h3>
-            <p>JavaScript, Go</p>
-          </article>
-        </div>
-        <p class="disclaimer">* Bảng phân loại mang tính giải trí, lấy từ ảnh gốc.</p>
-      </section>
+    <section class="elements">
+      <h2>Ngũ Hành &amp; ngôn ngữ <small class="mode-tag" id="source-tag">Nguồn: GitHub Linguist</small></h2>
+      <div class="modern-controls">
+        <div id="source-toggle"></div>
+        <div id="view-toggle"></div>
+      </div>
+      <div class="grid" id="element-grid"></div>
+      <p class="legend"></p>
+      <details id="debug-panel" hidden></details>
+      <p class="disclaimer">* Mặc định hiển thị TIOBE Top 20 (April 2026). Bấm "Xem tất cả ngôn ngữ" để mở rộng. Có thể đổi nguồn màu giữa GitHub Linguist và GitLab Linguist (palette khác hẳn).</p>
     </section>
 
-    <section id="panel-modern" role="tabpanel" aria-labelledby="tab-modern" hidden>
-      <section class="elements">
-        <h2>Ngũ Hành &amp; ngôn ngữ <small class="mode-tag" id="source-tag">Nguồn: GitHub Linguist</small></h2>
-        <div class="modern-controls">
-          <div id="source-toggle"></div>
-          <div id="view-toggle"></div>
-        </div>
-        <div class="grid" id="element-grid"></div>
-        <p class="legend"></p>
-        <details id="debug-panel" hidden></details>
-        <p class="disclaimer">* Mặc định hiển thị TIOBE Top 20 (April 2026). Bấm "Xem tất cả ngôn ngữ" để mở rộng. Có thể đổi nguồn màu giữa GitHub Linguist và GitLab Linguist (palette khác hẳn).</p>
-      </section>
-      <details class="original-image">
-        <summary>Ảnh gốc</summary>
-        <figure>
-          <img
-            src="assets/ngon-ngu-lap-trinh-phong-thuy.png"
-            alt="Sơ đồ phong thuỷ ngôn ngữ lập trình theo Ngũ Hành"
-          />
-          <figcaption>Sơ đồ ngôn ngữ lập trình xếp theo Ngũ Hành.</figcaption>
-        </figure>
-      </details>
+    <section class="figure" aria-labelledby="classic-image-heading">
+      <h2 id="classic-image-heading" class="visually-hidden">Ảnh gốc 2018</h2>
+      <figure>
+        <img
+          src="assets/ngon-ngu-lap-trinh-phong-thuy.png"
+          alt="Sơ đồ phong thuỷ ngôn ngữ lập trình theo Ngũ Hành (bài gốc 2018)"
+        />
+        <figcaption>
+          Sơ đồ gốc (2018) — Phạm Huy Hoàng,
+          <a href="https://toidicodedao.com/2018/01/02/top-5-ngon-ngu-lap-trinh-dang-hoc-cho-nam-2018/" target="_blank" rel="noopener noreferrer">Tôi đi code dạo</a>.
+        </figcaption>
+      </figure>
     </section>
 
     <footer class="credit">
@@ -118,7 +86,6 @@
       <p class="note">Trang này chỉ dùng cho mục đích trình bày lại nội dung, mọi quyền thuộc về tác giả gốc.</p>
     </footer>
   </main>
-  <script type="module" src="./js/mode-toggle.js"></script>
   <script type="module" src="./js/main.js"></script>
 </body>
 </html>

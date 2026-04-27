@@ -1,10 +1,10 @@
 # programming-fengshui
 
-Trang giới thiệu ảnh "Lựa chọn ngôn ngữ lập trình theo phong thuỷ".
+Trang phân loại ngôn ngữ lập trình theo Ngũ Hành (Kim, Mộc, Thuỷ, Hoả, Thổ) dựa trên màu sắc của GitHub Linguist / GitLab Linguist, tập trung TIOBE Top 20.
 
 ## Chạy thử
 
-Mở `index.html` trực tiếp trong trình duyệt, hoặc:
+Chạy qua HTTP server (cần thiết để `fetch` dữ liệu JSON):
 
 ```bash
 python3 -m http.server 8080
@@ -18,9 +18,16 @@ rồi truy cập http://localhost:8080.
 .
 ├── index.html
 ├── style.css
-├── assets/
-│   └── ngon-ngu-lap-trinh-phong-thuy.png
-└── README.md
+├── js/
+│   ├── main.js
+│   ├── classify-element.js
+│   ├── render-elements.js
+│   └── tiobe-top.js
+├── data/
+│   ├── github-colors.json
+│   └── gitlab-colors.json
+└── assets/
+    └── ngon-ngu-lap-trinh-phong-thuy.png
 ```
 
 ## Credit

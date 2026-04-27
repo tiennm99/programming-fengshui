@@ -90,19 +90,24 @@ body {
 .hero-ribbon .r-hoa  { background: var(--hoa); }
 .hero-ribbon .r-tho  { background: var(--tho); }
 
-/* ---------- Classic figure ---------- */
-.figure { display: flex; justify-content: center; margin: 1.25rem 0 2.25rem; }
+/* ---------- Original figure ---------- */
+.figure { display: flex; justify-content: center; margin: 2rem 0 0; }
 .figure figure {
   margin: 0; background: var(--card-bg); padding: 0.85rem;
   border: 1px solid var(--border); border-radius: var(--radius);
   box-shadow: var(--shadow); max-width: 100%;
 }
-.figure img, .original-image img {
+.figure img {
   display: block; max-width: 100%; height: auto; border-radius: var(--radius-sm);
 }
-.figure figcaption, .original-image figcaption {
+.figure figcaption {
   text-align: center; margin-top: 0.6rem; color: var(--muted); font-size: 0.9rem;
 }
+.figure figcaption a {
+  color: var(--accent-ink); text-decoration: none;
+  border-bottom: 1px dotted var(--accent);
+}
+.figure figcaption a:hover { color: var(--gold); border-bottom-color: var(--gold); }
 
 /* ---------- Section headings ---------- */
 .elements h2, .credit h2 {
@@ -163,62 +168,30 @@ body {
 .credit a:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 3px; }
 .credit .note { font-size: 0.85rem; color: var(--muted); font-style: italic; }
 
-/* ---------- Mode toggle (tablist) ---------- */
-.mode-toggle {
-  display: flex;
-  flex-wrap: wrap;            /* avoid 320px overflow */
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 1rem 0 1.5rem;
-}
-.mode-toggle [role="tab"] {
-  font: inherit; font-weight: 500;
-  padding: 0.5rem 1.05rem; border-radius: 999px;
-  border: 1px solid var(--border-strong);
-  background: var(--card-bg); color: var(--fg); cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-.mode-toggle [role="tab"]:hover { border-color: var(--accent); }
-.mode-toggle [role="tab"][aria-selected="true"] {
-  background: var(--accent); color: #fff; border-color: var(--accent);
-  box-shadow: 0 2px 6px rgba(184, 49, 47, 0.25);
-}
-.mode-toggle [role="tab"]:focus-visible { outline: none; box-shadow: var(--focus-ring); }
-
-[role="tabpanel"][hidden] { display: none; }
-
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-  [role="tabpanel"]:not([hidden]) { animation: fadeIn 180ms ease; }
+/* ---------- Visually hidden (a11y) ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
 }
 
-/* ---------- Original-image disclosure ---------- */
-.original-image {
-  margin: 2rem 0 0; background: var(--card-bg);
-  border: 1px solid var(--border); padding: 0.85rem 1rem;
-  border-radius: var(--radius); box-shadow: var(--shadow-sm);
-}
-.original-image > summary,
+/* ---------- Debug panel disclosure ---------- */
 #debug-panel > summary {
   cursor: pointer; list-style: none; font-weight: 500;
   display: inline-flex; align-items: center; gap: 0.4rem;
+  color: var(--muted);
 }
-.original-image > summary { color: var(--accent-ink); }
-#debug-panel > summary { color: var(--muted); }
-.original-image > summary::-webkit-details-marker,
 #debug-panel > summary::-webkit-details-marker { display: none; }
-.original-image > summary::before,
 #debug-panel > summary::before {
   content: "▸"; display: inline-block;
   transition: transform 0.15s ease; color: var(--gold);
 }
-.original-image[open] > summary::before,
 #debug-panel[open] > summary::before { transform: rotate(90deg); }
-.original-image > summary:focus-visible,
 #debug-panel > summary:focus-visible {
   outline: none; box-shadow: var(--focus-ring); border-radius: 4px;
 }
-.original-image figure { margin: 0.75rem 0 0; }
 
 /* ---------- Chip grid (modern panel) ---------- */
 .card-count {
@@ -311,14 +284,8 @@ body {
 @media (max-width: 420px) {
   .page { padding: 1.75rem 0.85rem 2.5rem; }
   .chip { font-size: 0.74rem; padding: 0.18rem 0.5rem; }
-  .mode-toggle [role="tab"] {
-    padding: 0.4rem 0.85rem; font-size: 0.92rem;
-    flex: 1 1 auto; text-align: center; min-width: 0;
-  }
 }
 
 @media (max-width: 320px) {
   .hero h1 { font-size: 1.4rem; }
-  .mode-toggle { gap: 0.4rem; }
-  .mode-toggle [role="tab"] { padding: 0.4rem 0.6rem; font-size: 0.88rem; }
 }
