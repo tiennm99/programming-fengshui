@@ -1,10 +1,18 @@
 import { ELEMENTS, hexToHsl } from './classify-element.js';
 
+// Relative luminance per WCAG 2.x — better than YIQ for mid-tones
+// (e.g. saturated mid-greens / mid-reds where YIQ flips text color wrong).
+function relLuminance(hex) {
+  const v = (c) => {
+    const x = parseInt(hex.slice(c, c + 2), 16) / 255;
+    return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+  };
+  return 0.2126 * v(1) + 0.7152 * v(3) + 0.0722 * v(5);
+}
+
 function pickTextColor(hex) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return (r * 299 + g * 587 + b * 114) / 1000 >= 128 ? 'black' : 'white';
+  // Threshold tuned so saturated mid-tones (#d44950, #5d4037) get white text.
+  return relLuminance(hex) > 0.5 ? '#1a1a1a' : '#ffffff';
 }
 
 function buildChip(name, color, { rank = null } = {}) {
@@ -14,7 +22,10 @@ function buildChip(name, color, { rank = null } = {}) {
   if (color) {
     span.style.background = color;
     span.style.color = pickTextColor(color);
-    span.title = rank ? `${color} · TIOBE #${rank}` : color;
+    const hexLabel = color.toUpperCase();
+    const tooltip = rank ? `${name} · ${hexLabel} · TIOBE #${rank}` : `${name} · ${hexLabel}`;
+    span.title = tooltip;
+    span.setAttribute('aria-label', tooltip);
   }
   if (rank) span.dataset.rank = String(rank);
   return span;
