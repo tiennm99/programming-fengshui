@@ -1,0 +1,112 @@
+
+=== GitHub Linguist (github-colors.json) ===
+Total entries: 722 | with color: 664 | skipped: 58
+All-langs bucket sizes: { kim: 65, moc: 167, thuy: 156, hoa: 201, tho: 75 }
+TIOBE Top 20 bucket sizes: { kim: 0, moc: 4, thuy: 4, hoa: 4, tho: 7 }
+Name length: min=1 max=31 median=6
+Top 10 longest names:
+  31  "Mathematical Programming System"  #0530ad  → thuy
+  30  "Cloud Firestore Security Rules"  #FFA000  → hoa
+  28  "World of Warcraft Addon Data"  #f7e43f  → tho
+  27  "Debian Package Control File"  #D70751  → hoa
+  26  "Velocity Template Language"  #507cff  → thuy
+  26  "WebAssembly Interface Type"  #6250e7  → thuy
+  24  "Apollo Guidance Computer"  #0B3D91  → thuy
+  24  "Common Workflow Language"  #B5314C  → hoa
+  24  "OpenAPI Specification v2"  #85ea2d  → moc
+  24  "OpenAPI Specification v3"  #85ea2d  → moc
+Contrast: 256 chips fail AA normal (<4.5:1), 115 fail large/UI (<3:1)
+Worst contrast failures (sample, lowest 20):
+   1.92  #40d47e  text=#ffffff  JSONiq  [moc]
+   1.93  #00cafe  text=#ffffff  Frege  [moc]
+   1.95  #5EC8DB  text=#ffffff  MLIR  [moc]
+   1.95  #d0b68c  text=#ffffff  Rocq Prover  [tho]
+   1.96  #dbb284  text=#ffffff  Pawn  [tho]
+   1.97  #16cec6  text=#ffffff  Imba  [moc]
+   1.97  #F4AA41  text=#ffffff  Bru  [hoa]
+   2.04  #2ACCA8  text=#ffffff  API Blueprint  [moc]
+   2.04  #8dc63f  text=#ffffff  Chapel  [moc]
+   2.04  #FFA000  text=#ffffff  Cloud Firestore Security Rules  [hoa]
+   2.05  #2fcc9f  text=#ffffff  SugarSS  [moc]
+   2.05  #f2a542  text=#ffffff  Latte  [hoa]
+   2.08  #9CC134  text=#ffffff  Augeas  [moc]
+   2.08  #F1A42B  text=#ffffff  COLLADA  [hoa]
+   2.10  #adb2cb  text=#ffffff  VHDL  [kim]
+   2.11  #42bff2  text=#ffffff  Marko  [moc]
+   2.12  #b0b77e  text=#ffffff  ooc  [tho]
+   2.12  #34c0eb  text=#ffffff  Cypher  [moc]
+   2.14  #f69e1d  text=#ffffff  SourcePawn  [hoa]
+   2.14  #dea584  text=#ffffff  Rust  [tho TIOBE#16]
+TIOBE Top 20 entries — contrast for each:
+  # 1 Python               #3572A5  text=#ffffff  ratio=5.12  → thuy
+  # 2 C                    #555555  text=#ffffff  ratio=7.46  → tho  AAA
+  # 3 C++                  #f34b7d  text=#ffffff  ratio=3.44  → hoa  FAIL-AA
+  # 4 Java                 #b07219  text=#ffffff  ratio=3.99  → tho  FAIL-AA
+  # 5 C#                   #178600  text=#ffffff  ratio=4.72  → moc
+  # 6 JavaScript           #f1e05a  text=#1a1a1a  ratio=12.89  → tho  AAA
+  # 7 Visual Basic .NET    #945db7  text=#ffffff  ratio=4.66  → hoa
+  # 8 SQL                  #e38c00  text=#ffffff  ratio=2.62  → tho  FAIL-AA
+  # 9 R                    #198CE7  text=#ffffff  ratio=3.53  → thuy  FAIL-AA
+  #10 Pascal               #E3F171  text=#1a1a1a  ratio=14.16  → tho  AAA
+  #12 Perl                 #0298c3  text=#ffffff  ratio=3.34  → moc  FAIL-AA
+  #13 Fortran              #4d41b1  text=#ffffff  ratio=7.76  → thuy  AAA
+  #14 PHP                  #4F5D95  text=#ffffff  ratio=6.30  → thuy
+  #15 Go                   #00ADD8  text=#ffffff  ratio=2.64  → moc  FAIL-AA
+  #16 Rust                 #dea584  text=#ffffff  ratio=2.14  → tho  FAIL-AA
+  #17 MATLAB               #e16737  text=#ffffff  ratio=3.39  → hoa  FAIL-AA
+  #18 Assembly             #6E4C13  text=#ffffff  ratio=7.76  → tho  AAA
+  #19 Swift                #F05138  text=#ffffff  ratio=3.54  → hoa  FAIL-AA
+  #20 Ada                  #02f88c  text=#1a1a1a  ratio=12.27  → moc  AAA
+
+=== GitLab Linguist (gitlab-colors.json) ===
+Total entries: 91 | with color: 91 | skipped: 0
+All-langs bucket sizes: { kim: 6, moc: 22, thuy: 18, hoa: 29, tho: 16 }
+TIOBE Top 20 bucket sizes: { kim: 0, moc: 3, thuy: 2, hoa: 3, tho: 5 }
+Name length: min=1 max=18 median=5
+Top 10 longest names:
+  18  "Ragel in Ruby Host"  #ff9c2e  → hoa
+  18  "Unified Parallel C"  #755223  → tho
+  13  "SuperCollider"  #46390b  → tho
+  12  "ActionScript"  #e3491a  → hoa
+  12  "CoffeeScript"  #244776  → thuy
+  12  "Visual Basic"  #945db7  → hoa
+  11  "Common Lisp"  #3fb68b  → moc
+  11  "Objective-C"  #438eff  → thuy
+  11  "Objective-J"  #ff0c5a  → hoa
+  11  "Standard ML"  #dc566d  → hoa
+Contrast: 44 chips fail AA normal (<4.5:1), 13 fail large/UI (<3:1)
+Worst contrast failures (sample, lowest 20):
+   2.09  #ff9c2e  text=#ffffff  Ragel in Ruby Host  [hoa]
+   2.12  #b0b77e  text=#ffffff  ooc  [tho]
+   2.14  #dea584  text=#ffffff  Rust  [tho TIOBE#16]
+   2.22  #e69f56  text=#ffffff  Groovy  [hoa]
+   2.29  #c7a938  text=#ffffff  Mirah  [tho]
+   2.49  #3ebc27  text=#ffffff  Dylan  [moc]
+   2.54  #3fb68b  text=#ffffff  Common Lisp  [moc]
+   2.69  #bb92ac  text=#ffffff  Matlab  [hoa]
+   2.70  #29b544  text=#ffffff  Haskell  [moc]
+   2.77  #ee7d06  text=#ffffff  Vala  [tho]
+   2.79  #0faf8d  text=#ffffff  Erlang  [moc]
+   2.81  #a89b4d  text=#ffffff  Go  [tho TIOBE#15]
+   2.87  #7b9db4  text=#ffffff  Fancy  [thuy]
+   3.01  #848bf3  text=#ffffff  Verilog  [kim]
+   3.08  #bd79d1  text=#ffffff  Arduino  [hoa]
+   3.21  #438eff  text=#ffffff  Objective-C  [thuy]
+   3.22  #0098db  text=#ffffff  Volt  [moc]
+   3.24  #6594b9  text=#ffffff  AutoHotkey  [thuy]
+   3.27  #82937f  text=#ffffff  Gosu  [moc]
+   3.34  #0298c3  text=#ffffff  Perl  [moc TIOBE#12]
+TIOBE Top 20 entries — contrast for each:
+  # 1 Python               #3581ba  text=#ffffff  ratio=4.20  → thuy  FAIL-AA
+  # 3 C++                  #f34b7d  text=#ffffff  ratio=3.44  → hoa  FAIL-AA
+  # 4 Java                 #b07219  text=#ffffff  ratio=3.99  → tho  FAIL-AA
+  # 5 C#                   #5a25a2  text=#ffffff  ratio=9.45  → hoa  AAA
+  # 6 JavaScript           #f15501  text=#ffffff  ratio=3.48  → tho  FAIL-AA
+  # 9 R                    #198ce7  text=#ffffff  ratio=3.53  → thuy  FAIL-AA
+  #10 Pascal               #b0ce4e  text=#1a1a1a  ratio=9.77  → moc  AAA
+  #12 Perl                 #0298c3  text=#ffffff  ratio=3.34  → moc  FAIL-AA
+  #14 PHP                  #6e03c1  text=#ffffff  ratio=8.59  → hoa  AAA
+  #15 Go                   #a89b4d  text=#ffffff  ratio=2.81  → tho  FAIL-AA
+  #16 Rust                 #dea584  text=#ffffff  ratio=2.14  → tho  FAIL-AA
+  #18 Assembly             #a67219  text=#ffffff  ratio=4.16  → tho  FAIL-AA
+  #20 Ada                  #02f88c  text=#1a1a1a  ratio=12.27  → moc  AAA

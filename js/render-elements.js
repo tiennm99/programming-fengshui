@@ -11,8 +11,13 @@ function relLuminance(hex) {
 }
 
 function pickTextColor(hex) {
-  // Threshold tuned so saturated mid-tones (#d44950, #5d4037) get white text.
-  return relLuminance(hex) > 0.5 ? '#1a1a1a' : '#ffffff';
+  // Pick whichever of black/white scores higher WCAG contrast on this bg.
+  // Old 0.5 luminance threshold sent white onto mid-tones like #dea584 (Rust)
+  // → 2.14:1 ratio, well below AA. Computing both ratios fixes the long tail.
+  const L = relLuminance(hex);
+  const ratioBlack = (L + 0.05) / 0.05;
+  const ratioWhite = 1.05 / (L + 0.05);
+  return ratioBlack >= ratioWhite ? '#111' : '#fff';
 }
 
 function buildChip(name, color, { rank = null } = {}) {

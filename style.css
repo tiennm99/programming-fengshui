@@ -132,15 +132,16 @@ body {
   margin: 1.75rem 0 1rem; font-weight: 700; letter-spacing: 0.3px;
 }
 .mode-tag {
-  display: block; font-size: 0.85rem; font-style: italic;
-  color: var(--muted); font-weight: 400; margin-top: 0.15rem;
+  text-align: center; font-size: 0.85rem; font-style: italic;
+  color: var(--muted); font-weight: 400; margin: -0.5rem 0 1rem;
 }
 
 /* ---------- Card grid ---------- */
 .grid {
   display: grid;
-  gap: 0.9rem;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: start;
 }
 
 .card {
@@ -204,19 +205,22 @@ body {
 /* ---------- Chip grid (modern panel) ---------- */
 .card-count {
   display: block; margin: 0 0 0.6rem;
-  color: var(--muted); font-size: 0.78rem;
-  font-variant-numeric: tabular-nums;
+  color: var(--muted); font-size: 0.85rem; font-weight: 600;
+  font-variant-numeric: tabular-nums; letter-spacing: 0.1px;
 }
 
-.chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem 0.45rem; }
+.elements.show-all .chips { gap: 0.45rem 0.5rem; padding-top: 0.25rem; }
 
 .chip {
   display: inline-flex; align-items: center;
   padding: 0.22rem 0.6rem; border-radius: 999px;
   font-size: 0.78rem; line-height: 1.4;
-  border: 1px solid rgba(0, 0, 0, 0.18); white-space: nowrap;
+  border: 1px solid rgba(0, 0, 0, 0.18);
   background: var(--bg); color: var(--fg);
-  max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .chip-tiobe {
   border-color: rgba(0, 0, 0, 0.45); font-weight: 600;
@@ -227,7 +231,7 @@ body {
 .elements.show-all .chip-other { display: inline-flex; }
 
 .modern-controls {
-  display: flex; flex-wrap: wrap; justify-content: center; align-items: end;
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
   gap: 1rem 1.25rem; margin: 0 0 1rem;
 }
 .control-group {

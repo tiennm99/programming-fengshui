@@ -78,9 +78,10 @@ async function loadAndRender(sourceKey) {
 }
 
 function init() {
+  const section = document.querySelector('main .elements');
   refs.grid = document.getElementById('element-grid');
-  refs.legend = document.querySelector('#panel-modern .legend');
-  refs.section = document.querySelector('#panel-modern .elements');
+  refs.legend = section?.querySelector('.legend') ?? null;
+  refs.section = section;
   refs.debug = document.getElementById('debug-panel');
   refs.sourceTag = document.getElementById('source-tag');
 
