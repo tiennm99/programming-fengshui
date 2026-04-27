@@ -103,22 +103,54 @@ export function mountSourceToggle(mountEl, sources, defaultKey, onChange) {
 
 export function mountViewToggle(mountEl, scopeEl) {
   if (!mountEl || !scopeEl) return;
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'view-toggle-btn';
-  const labels = {
-    tiobe: 'Xem tất cả ngôn ngữ',
-    all: 'Chỉ TIOBE Top 20',
-  };
-  function apply(view) {
-    scopeEl.classList.toggle('show-all', view === 'all');
-    btn.textContent = labels[view];
-    btn.dataset.view = view;
-    btn.setAttribute('aria-pressed', String(view === 'all'));
+  const views = [
+    { key: 'tiobe', label: 'TIOBE Top 20' },
+    { key: 'all', label: 'Tất cả ngôn ngữ' },
+  ];
+  const DEFAULT_VIEW = 'tiobe';
+
+  const tablist = document.createElement('div');
+  tablist.className = 'view-toggle';
+  tablist.setAttribute('role', 'tablist');
+  tablist.setAttribute('aria-label', 'Phạm vi hiển thị ngôn ngữ');
+
+  const buttons = views.map(({ key, label }) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.role = 'tab';
+    btn.className = 'view-toggle-btn';
+    btn.dataset.view = key;
+    btn.textContent = label;
+    btn.setAttribute('aria-selected', String(key === DEFAULT_VIEW));
+    btn.tabIndex = key === DEFAULT_VIEW ? 0 : -1;
+    btn.addEventListener('click', () => activate(key));
+    tablist.appendChild(btn);
+    return btn;
+  });
+
+  tablist.addEventListener('keydown', (e) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+    e.preventDefault();
+    const i = buttons.indexOf(document.activeElement);
+    let next;
+    if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = buttons.length - 1;
+    else if (e.key === 'ArrowLeft') next = (i <= 0 ? buttons.length : i) - 1;
+    else next = (i + 1) % buttons.length;
+    buttons[next].focus();
+    activate(buttons[next].dataset.view);
+  });
+
+  function activate(key) {
+    for (const b of buttons) {
+      const active = b.dataset.view === key;
+      b.setAttribute('aria-selected', String(active));
+      b.tabIndex = active ? 0 : -1;
+    }
+    scopeEl.classList.toggle('show-all', key === 'all');
   }
-  btn.addEventListener('click', () => apply(btn.dataset.view === 'all' ? 'tiobe' : 'all'));
-  apply('tiobe');
-  mountEl.replaceChildren(btn);
+
+  mountEl.replaceChildren(tablist);
 }
 
 export function renderError(message, mountEl) {
