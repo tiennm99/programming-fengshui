@@ -7,15 +7,16 @@ function pickTextColor(hex) {
   return (r * 299 + g * 587 + b * 114) / 1000 >= 128 ? 'black' : 'white';
 }
 
-function buildChip(name, color) {
+function buildChip(name, color, { rank = null } = {}) {
   const span = document.createElement('span');
-  span.className = 'chip';
+  span.className = 'chip' + (rank ? ' chip-tiobe' : ' chip-other');
   span.textContent = name;
   if (color) {
     span.style.background = color;
     span.style.color = pickTextColor(color);
-    span.title = color;
+    span.title = rank ? `${color} · TIOBE #${rank}` : color;
   }
+  if (rank) span.dataset.rank = String(rank);
   return span;
 }
 
@@ -24,20 +25,43 @@ export function renderGrid(buckets, mountEl) {
   const fragment = document.createDocumentFragment();
   for (const { key, label } of ELEMENTS) {
     const langs = buckets[key] || [];
+    const tiobeCount = langs.filter((l) => l.rank).length;
     const card = document.createElement('article');
     card.className = `card ${key}`;
     const h3 = document.createElement('h3');
     h3.textContent = label;
     const count = document.createElement('small');
     count.className = 'card-count';
-    count.textContent = `${langs.length} ngôn ngữ`;
+    count.textContent = tiobeCount
+      ? `${tiobeCount} TIOBE · ${langs.length - tiobeCount} khác`
+      : `${langs.length} ngôn ngữ`;
     const chips = document.createElement('div');
     chips.className = 'chips';
-    for (const { name, color } of langs) chips.appendChild(buildChip(name, color));
+    for (const { name, color, rank } of langs) chips.appendChild(buildChip(name, color, { rank }));
     card.append(h3, count, chips);
     fragment.appendChild(card);
   }
   mountEl.replaceChildren(fragment);
+}
+
+export function mountViewToggle(mountEl, scopeEl) {
+  if (!mountEl || !scopeEl) return;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'view-toggle-btn';
+  const labels = {
+    tiobe: 'Xem tất cả ngôn ngữ',
+    all: 'Chỉ TIOBE Top 20',
+  };
+  function apply(view) {
+    scopeEl.classList.toggle('show-all', view === 'all');
+    btn.textContent = labels[view];
+    btn.dataset.view = view;
+    btn.setAttribute('aria-pressed', String(view === 'all'));
+  }
+  btn.addEventListener('click', () => apply(btn.dataset.view === 'all' ? 'tiobe' : 'all'));
+  apply('tiobe');
+  mountEl.replaceChildren(btn);
 }
 
 export function renderError(message, mountEl) {

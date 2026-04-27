@@ -1,5 +1,6 @@
 import { classify } from './classify-element.js';
-import { renderGrid, renderError, renderDebugPanel, isBorderline } from './render-elements.js';
+import { renderGrid, renderError, renderDebugPanel, isBorderline, mountViewToggle } from './render-elements.js';
+import { TIOBE_TOP } from './tiobe-top.js';
 
 const HEX_RE = /^#[0-9a-fA-F]{6}$/;
 const LEGEND_TEXT =
@@ -27,15 +28,22 @@ async function init() {
         continue;
       }
       const element = classify(color);
-      buckets[element].push({ name, color });
+      const rank = TIOBE_TOP[name] || null;
+      buckets[element].push({ name, color, rank });
       if (isBorderline(color)) borderline.push({ name, color, element });
     }
 
     for (const key of Object.keys(buckets)) {
-      buckets[key].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+      buckets[key].sort((a, b) => {
+        if (a.rank && b.rank) return a.rank - b.rank;
+        if (a.rank) return -1;
+        if (b.rank) return 1;
+        return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+      });
     }
 
     renderGrid(buckets, gridEl);
+    mountViewToggle(document.getElementById('view-toggle'), document.querySelector('#panel-modern .elements'));
     if (legendEl) legendEl.textContent = LEGEND_TEXT;
     renderDebugPanel({ skipped, borderline }, debugEl);
   } catch (err) {

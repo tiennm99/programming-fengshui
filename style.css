@@ -278,6 +278,47 @@ body {
   color: var(--fg);
 }
 
+.chip-tiobe {
+  border-color: rgba(0, 0, 0, 0.35);
+  font-weight: 600;
+}
+
+.elements .chip-other { display: none; }
+.elements.show-all .chip-other { display: inline-block; }
+
+#view-toggle {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1rem;
+}
+
+.view-toggle-btn {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--muted);
+  background: var(--card-bg);
+  color: var(--fg);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.view-toggle-btn:hover {
+  border-color: var(--accent);
+}
+
+.view-toggle-btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.view-toggle-btn:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
 .legend {
   text-align: center;
   font-style: italic;
