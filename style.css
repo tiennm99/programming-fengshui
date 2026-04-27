@@ -118,7 +118,7 @@ body {
 .grid {
   display: grid;
   gap: 0.9rem;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .card {
@@ -304,9 +304,12 @@ body {
 #debug-panel h4 { margin: 0.85rem 0 0.4rem; font-size: 0.9rem; color: var(--fg); }
 
 /* ---------- Mobile ---------- */
+@media (max-width: 720px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 420px) {
   .page { padding: 1.75rem 0.85rem 2.5rem; }
-  .grid { grid-template-columns: 1fr; }
   .chip { font-size: 0.74rem; padding: 0.18rem 0.5rem; }
   .mode-toggle [role="tab"] {
     padding: 0.4rem 0.85rem; font-size: 0.92rem;
