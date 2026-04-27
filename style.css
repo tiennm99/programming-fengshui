@@ -245,7 +245,26 @@ body {
 .elements .chip-other { display: none; }
 .elements.show-all .chip-other { display: inline-flex; }
 
-#view-toggle { display: flex; justify-content: center; margin: 0 0 1rem; }
+.modern-controls {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 0.75rem; margin: 0 0 1rem;
+}
+.modern-controls #view-toggle,
+.modern-controls #source-toggle { display: flex; margin: 0; }
+
+.source-toggle {
+  display: inline-flex; border: 1px solid var(--border-strong);
+  border-radius: 999px; padding: 2px; background: var(--card-bg);
+}
+.source-toggle-btn {
+  font: inherit; font-size: 0.85rem; padding: 0.3rem 0.85rem;
+  border-radius: 999px; border: none; background: transparent;
+  color: var(--fg); cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.source-toggle-btn[aria-selected="true"] { background: var(--accent); color: #fff; }
+.source-toggle-btn:hover:not([aria-selected="true"]) { background: var(--bg-tint); }
+.source-toggle-btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
 .view-toggle-btn {
   font: inherit; font-size: 0.85rem;

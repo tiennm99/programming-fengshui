@@ -55,6 +55,52 @@ export function renderGrid(buckets, mountEl) {
   mountEl.replaceChildren(fragment);
 }
 
+export function mountSourceToggle(mountEl, sources, defaultKey, onChange) {
+  if (!mountEl || !sources?.length) return;
+  const tablist = document.createElement('div');
+  tablist.className = 'source-toggle';
+  tablist.setAttribute('role', 'tablist');
+  tablist.setAttribute('aria-label', 'Nguồn dữ liệu màu');
+
+  const buttons = sources.map(({ key, label }) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.role = 'tab';
+    btn.className = 'source-toggle-btn';
+    btn.dataset.source = key;
+    btn.textContent = label;
+    btn.setAttribute('aria-selected', String(key === defaultKey));
+    btn.tabIndex = key === defaultKey ? 0 : -1;
+    btn.addEventListener('click', () => activate(key));
+    tablist.appendChild(btn);
+    return btn;
+  });
+
+  tablist.addEventListener('keydown', (e) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+    e.preventDefault();
+    const i = buttons.indexOf(document.activeElement);
+    let next;
+    if (e.key === 'Home') next = 0;
+    else if (e.key === 'End') next = buttons.length - 1;
+    else if (e.key === 'ArrowLeft') next = (i <= 0 ? buttons.length : i) - 1;
+    else next = (i + 1) % buttons.length;
+    buttons[next].focus();
+    activate(buttons[next].dataset.source);
+  });
+
+  function activate(key) {
+    for (const b of buttons) {
+      const active = b.dataset.source === key;
+      b.setAttribute('aria-selected', String(active));
+      b.tabIndex = active ? 0 : -1;
+    }
+    if (typeof onChange === 'function') onChange(key);
+  }
+
+  mountEl.replaceChildren(tablist);
+}
+
 export function mountViewToggle(mountEl, scopeEl) {
   if (!mountEl || !scopeEl) return;
   const btn = document.createElement('button');
