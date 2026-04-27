@@ -41,12 +41,11 @@ export function hexToHsl(hex) {
 export function classify(hex) {
   const { h, s, l } = hexToHsl(hex);
 
-  // Step 2: grayscale (very low saturation)
-  if (s < 5) {
-    if (l < 20) return 'thuy';
-    if (l < 70) return 'tho';
-    return 'kim';
-  }
+  // Step 1: KIM — high lightness ("metallic shine"); catches whites + pastels of any hue
+  if (l >= 70) return 'kim';
+
+  // Step 2: grayscale (very low saturation, lightness already < 70)
+  if (s < 5) return l < 20 ? 'thuy' : 'tho';
 
   // Step 3: hue ranges
   if (h < 20) return 'hoa';
