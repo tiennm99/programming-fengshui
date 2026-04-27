@@ -60,28 +60,32 @@ export function renderGrid(buckets, mountEl) {
   mountEl.replaceChildren(fragment);
 }
 
-export function mountSourceToggle(mountEl, sources, defaultKey, onChange) {
-  if (!mountEl || !sources?.length) return;
-  const tablist = document.createElement('div');
-  tablist.className = 'source-toggle';
-  tablist.setAttribute('role', 'tablist');
-  tablist.setAttribute('aria-label', 'Nguồn dữ liệu màu');
+// Segmented control with ARIA radiogroup pattern + roving tabindex.
+// Replaces previous tab/tablist roles (segmented controls are radios, not tabs —
+// tabs require associated tabpanels which we don't have here).
+export function mountSegmentedControl(mountEl, options, defaultKey, onChange, ariaLabel) {
+  if (!mountEl || !options?.length) return;
 
-  const buttons = sources.map(({ key, label }) => {
+  const group = document.createElement('div');
+  group.className = 'segmented';
+  group.setAttribute('role', 'radiogroup');
+  if (ariaLabel) group.setAttribute('aria-label', ariaLabel);
+
+  const buttons = options.map(({ key, label }) => {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.role = 'tab';
-    btn.className = 'source-toggle-btn';
-    btn.dataset.source = key;
+    btn.role = 'radio';
+    btn.className = 'segmented-btn';
+    btn.dataset.key = key;
     btn.textContent = label;
-    btn.setAttribute('aria-selected', String(key === defaultKey));
+    btn.setAttribute('aria-checked', String(key === defaultKey));
     btn.tabIndex = key === defaultKey ? 0 : -1;
     btn.addEventListener('click', () => activate(key));
-    tablist.appendChild(btn);
+    group.appendChild(btn);
     return btn;
   });
 
-  tablist.addEventListener('keydown', (e) => {
+  group.addEventListener('keydown', (e) => {
     if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
     e.preventDefault();
     const i = buttons.indexOf(document.activeElement);
@@ -91,71 +95,19 @@ export function mountSourceToggle(mountEl, sources, defaultKey, onChange) {
     else if (e.key === 'ArrowLeft') next = (i <= 0 ? buttons.length : i) - 1;
     else next = (i + 1) % buttons.length;
     buttons[next].focus();
-    activate(buttons[next].dataset.source);
+    activate(buttons[next].dataset.key);
   });
 
   function activate(key) {
     for (const b of buttons) {
-      const active = b.dataset.source === key;
-      b.setAttribute('aria-selected', String(active));
+      const active = b.dataset.key === key;
+      b.setAttribute('aria-checked', String(active));
       b.tabIndex = active ? 0 : -1;
     }
     if (typeof onChange === 'function') onChange(key);
   }
 
-  mountEl.replaceChildren(tablist);
-}
-
-export function mountViewToggle(mountEl, scopeEl) {
-  if (!mountEl || !scopeEl) return;
-  const views = [
-    { key: 'tiobe', label: 'TIOBE Top 20' },
-    { key: 'all', label: 'Tất cả ngôn ngữ' },
-  ];
-  const DEFAULT_VIEW = 'tiobe';
-
-  const tablist = document.createElement('div');
-  tablist.className = 'view-toggle';
-  tablist.setAttribute('role', 'tablist');
-  tablist.setAttribute('aria-label', 'Phạm vi hiển thị ngôn ngữ');
-
-  const buttons = views.map(({ key, label }) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.role = 'tab';
-    btn.className = 'view-toggle-btn';
-    btn.dataset.view = key;
-    btn.textContent = label;
-    btn.setAttribute('aria-selected', String(key === DEFAULT_VIEW));
-    btn.tabIndex = key === DEFAULT_VIEW ? 0 : -1;
-    btn.addEventListener('click', () => activate(key));
-    tablist.appendChild(btn);
-    return btn;
-  });
-
-  tablist.addEventListener('keydown', (e) => {
-    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
-    e.preventDefault();
-    const i = buttons.indexOf(document.activeElement);
-    let next;
-    if (e.key === 'Home') next = 0;
-    else if (e.key === 'End') next = buttons.length - 1;
-    else if (e.key === 'ArrowLeft') next = (i <= 0 ? buttons.length : i) - 1;
-    else next = (i + 1) % buttons.length;
-    buttons[next].focus();
-    activate(buttons[next].dataset.view);
-  });
-
-  function activate(key) {
-    for (const b of buttons) {
-      const active = b.dataset.view === key;
-      b.setAttribute('aria-selected', String(active));
-      b.tabIndex = active ? 0 : -1;
-    }
-    scopeEl.classList.toggle('show-all', key === 'all');
-  }
-
-  mountEl.replaceChildren(tablist);
+  mountEl.replaceChildren(group);
 }
 
 export function renderError(message, mountEl) {

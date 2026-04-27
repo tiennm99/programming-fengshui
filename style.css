@@ -80,10 +80,10 @@ body {
 }
 .hero .subtitle { margin: 0.5rem auto 0; max-width: 38ch; color: var(--muted); font-style: italic; }
 .hero-ribbon {
-  display: flex; justify-content: center; gap: 6px;
-  margin: 0.9rem auto 0; width: max-content; max-width: 100%;
+  display: flex; justify-content: center; gap: 8px;
+  margin: 1rem auto 0; width: max-content; max-width: 100%;
 }
-.hero-ribbon span { display: block; width: 28px; height: 4px; border-radius: 2px; }
+.hero-ribbon span { display: block; width: 64px; height: 6px; border-radius: 3px; }
 .hero-ribbon .r-kim  { background: var(--kim); }
 .hero-ribbon .r-moc  { background: var(--moc); }
 .hero-ribbon .r-thuy { background: var(--thuy); }
@@ -161,11 +161,16 @@ body {
 .card h3 { margin: 0 0 0.45rem; font-size: 1.05rem; letter-spacing: 1.2px; font-weight: 700; }
 .card p { margin: 0; color: var(--fg); }
 
-.card.kim  { border-top-color: var(--kim);  } .card.kim h3  { color: var(--kim);  }
-.card.thuy { border-top-color: var(--thuy); } .card.thuy h3 { color: var(--thuy); }
-.card.moc  { border-top-color: var(--moc);  } .card.moc h3  { color: var(--moc);  }
-.card.hoa  { border-top-color: var(--hoa);  } .card.hoa h3  { color: var(--hoa);  }
-.card.tho  { border-top-color: var(--tho);  } .card.tho h3  { color: var(--tho);  }
+.card.kim  { border-top-color: var(--kim);  background: color-mix(in oklch, var(--kim)  6%, var(--card-bg)); }
+.card.kim  h3, .card.kim  .card-count { color: var(--kim);  }
+.card.thuy { border-top-color: var(--thuy); background: color-mix(in oklch, var(--thuy) 6%, var(--card-bg)); }
+.card.thuy h3, .card.thuy .card-count { color: var(--thuy); }
+.card.moc  { border-top-color: var(--moc);  background: color-mix(in oklch, var(--moc)  6%, var(--card-bg)); }
+.card.moc  h3, .card.moc  .card-count { color: var(--moc);  }
+.card.hoa  { border-top-color: var(--hoa);  background: color-mix(in oklch, var(--hoa)  6%, var(--card-bg)); }
+.card.hoa  h3, .card.hoa  .card-count { color: var(--hoa);  }
+.card.tho  { border-top-color: var(--tho);  background: color-mix(in oklch, var(--tho)  6%, var(--card-bg)); }
+.card.tho  h3, .card.tho  .card-count { color: var(--tho);  }
 
 .disclaimer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 1rem; }
 
@@ -210,7 +215,15 @@ body {
 }
 
 .chips { display: flex; flex-wrap: wrap; gap: 0.4rem 0.45rem; }
-.elements.show-all .chips { gap: 0.45rem 0.5rem; padding-top: 0.25rem; }
+.elements.show-all .chips {
+  gap: 0.45rem 0.5rem; padding-top: 0.25rem;
+  max-height: 60vh; overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent;
+}
+.elements.show-all .chips::-webkit-scrollbar { width: 6px; }
+.elements.show-all .chips::-webkit-scrollbar-thumb {
+  background: var(--border-strong); border-radius: 3px;
+}
 
 .chip {
   display: inline-flex; align-items: center;
@@ -222,9 +235,14 @@ body {
   white-space: normal;
   overflow-wrap: anywhere;
 }
+/* Subtle outline boost for chips with a colored background — helps borderline
+   contrast cases (e.g. Swift #F05138) without changing chip color. */
+.chip[style*="background"] {
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.45), 0 0 1px rgba(0, 0, 0, 0.45);
+}
 .chip-tiobe {
   border-color: rgba(0, 0, 0, 0.45); font-weight: 600;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.18);
 }
 
 .elements .chip-other { display: none; }
@@ -240,36 +258,25 @@ body {
 .control-label {
   font-size: 0.78rem; color: var(--muted); letter-spacing: 0.3px; text-transform: uppercase;
 }
+.modern-controls #source-toggle,
 .modern-controls #view-toggle,
-.modern-controls #source-toggle { display: flex; margin: 0; }
+.modern-controls #sort-toggle { display: flex; margin: 0; }
 
-.source-toggle {
+/* ---------- Segmented control (source / view / sort) ---------- */
+.segmented {
   display: inline-flex; border: 1px solid var(--border-strong);
   border-radius: 999px; padding: 2px; background: var(--card-bg);
 }
-.source-toggle-btn {
-  font: inherit; font-size: 0.85rem; padding: 0.3rem 0.85rem;
+.segmented-btn {
+  font: inherit; font-size: 0.85rem; padding: 0.4rem 0.9rem;
+  min-height: 36px;
   border-radius: 999px; border: none; background: transparent;
   color: var(--fg); cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
-.source-toggle-btn[aria-selected="true"] { background: var(--accent); color: #fff; }
-.source-toggle-btn:hover:not([aria-selected="true"]) { background: var(--bg-tint); }
-.source-toggle-btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
-
-.view-toggle {
-  display: inline-flex; border: 1px solid var(--border-strong);
-  border-radius: 999px; padding: 2px; background: var(--card-bg);
-}
-.view-toggle-btn {
-  font: inherit; font-size: 0.85rem; padding: 0.3rem 0.85rem;
-  border-radius: 999px; border: none; background: transparent;
-  color: var(--fg); cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.view-toggle-btn[aria-selected="true"] { background: var(--accent); color: #fff; }
-.view-toggle-btn:hover:not([aria-selected="true"]) { background: var(--bg-tint); }
-.view-toggle-btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.segmented-btn[aria-checked="true"] { background: var(--accent); color: #fff; }
+.segmented-btn:hover:not([aria-checked="true"]) { background: var(--bg-tint); }
+.segmented-btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
 .legend {
   text-align: center; font-style: italic;
@@ -300,11 +307,15 @@ body {
   .grid { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 420px) {
-  .page { padding: 1.75rem 0.85rem 2.5rem; }
-  .chip { font-size: 0.74rem; padding: 0.18rem 0.5rem; }
+@media (max-width: 480px) {
+  .modern-controls { flex-direction: column; align-items: stretch; gap: 0.85rem; }
+  .modern-controls .control-group { flex-direction: row; justify-content: space-between; gap: 0.6rem; }
+  .modern-controls .control-label { align-self: center; flex-shrink: 0; }
+  .segmented-btn { min-height: 44px; padding: 0.5rem 0.9rem; }
+  .hero-ribbon span { width: clamp(40px, 14vw, 64px); }
 }
 
-@media (max-width: 320px) {
-  .hero h1 { font-size: 1.4rem; }
+@media (max-width: 420px) {
+  .page { padding: 1.75rem 0.85rem 2.5rem; }
+  .chip { font-size: 0.74rem; padding: 0.22rem 0.55rem; min-height: 28px; }
 }

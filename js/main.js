@@ -1,11 +1,10 @@
-import { classify } from './classify-element.js';
+import { classify, hexToHsl } from './classify-element.js';
 import {
   renderGrid,
   renderError,
   renderDebugPanel,
   isBorderline,
-  mountViewToggle,
-  mountSourceToggle,
+  mountSegmentedControl,
 } from './render-elements.js';
 import { TIOBE_TOP } from './tiobe-top.js';
 
@@ -19,6 +18,16 @@ const SOURCES = {
 };
 const DEFAULT_SOURCE = 'github';
 
+const VIEW_OPTIONS = [
+  { key: 'tiobe', label: 'TIOBE Top 20' },
+  { key: 'all', label: 'Tất cả ngôn ngữ' },
+];
+const SORT_OPTIONS = [
+  { key: 'tiobe', label: 'Mặc định' },
+  { key: 'alpha', label: 'A–Z' },
+  { key: 'hue', label: 'Cầu vồng' },
+];
+
 const refs = {
   grid: null,
   legend: null,
@@ -26,6 +35,9 @@ const refs = {
   debug: null,
   sourceTag: null,
 };
+
+let lastBuckets = null;
+let currentSort = 'tiobe';
 
 function classifyAll(data) {
   const buckets = { kim: [], moc: [], thuy: [], hoa: [], tho: [] };
@@ -44,16 +56,35 @@ function classifyAll(data) {
     if (isBorderline(color)) borderline.push({ name, color, element });
   }
 
-  for (const key of Object.keys(buckets)) {
-    buckets[key].sort((a, b) => {
-      if (a.rank && b.rank) return a.rank - b.rank;
-      if (a.rank) return -1;
-      if (b.rank) return 1;
-      return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+  return { buckets, skipped, borderline };
+}
+
+function sortBucket(langs, key) {
+  const byAlpha = (a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+  if (key === 'alpha') return [...langs].sort(byAlpha);
+  if (key === 'hue') {
+    return [...langs].sort((a, b) => {
+      const ha = a.color ? hexToHsl(a.color).h : 999;
+      const hb = b.color ? hexToHsl(b.color).h : 999;
+      return ha - hb || byAlpha(a, b);
     });
   }
+  // 'tiobe' default — TIOBE-ranked first, then alphabetical
+  return [...langs].sort((a, b) => {
+    if (a.rank && b.rank) return a.rank - b.rank;
+    if (a.rank) return -1;
+    if (b.rank) return 1;
+    return byAlpha(a, b);
+  });
+}
 
-  return { buckets, skipped, borderline };
+function applySortAndRender() {
+  if (!lastBuckets) return;
+  const sorted = {};
+  for (const [key, langs] of Object.entries(lastBuckets)) {
+    sorted[key] = sortBucket(langs, currentSort);
+  }
+  renderGrid(sorted, refs.grid);
 }
 
 async function loadAndRender(sourceKey) {
@@ -64,7 +95,8 @@ async function loadAndRender(sourceKey) {
     const data = await res.json();
     const { buckets, skipped, borderline } = classifyAll(data);
 
-    renderGrid(buckets, refs.grid);
+    lastBuckets = buckets;
+    applySortAndRender();
     if (refs.legend) refs.legend.textContent = LEGEND_TEXT;
     if (refs.sourceTag) refs.sourceTag.textContent = `Nguồn: ${source.label} Linguist`;
     renderDebugPanel({ skipped, borderline }, refs.debug);
@@ -85,13 +117,27 @@ function init() {
   refs.debug = document.getElementById('debug-panel');
   refs.sourceTag = document.getElementById('source-tag');
 
-  mountSourceToggle(
+  mountSegmentedControl(
     document.getElementById('source-toggle'),
     Object.entries(SOURCES).map(([key, s]) => ({ key, label: s.label })),
     DEFAULT_SOURCE,
     loadAndRender,
+    'Nguồn dữ liệu màu',
   );
-  mountViewToggle(document.getElementById('view-toggle'), refs.section);
+  mountSegmentedControl(
+    document.getElementById('view-toggle'),
+    VIEW_OPTIONS,
+    'tiobe',
+    (key) => section?.classList.toggle('show-all', key === 'all'),
+    'Phạm vi hiển thị ngôn ngữ',
+  );
+  mountSegmentedControl(
+    document.getElementById('sort-toggle'),
+    SORT_OPTIONS,
+    'tiobe',
+    (key) => { currentSort = key; applySortAndRender(); },
+    'Sắp xếp ngôn ngữ',
+  );
   loadAndRender(DEFAULT_SOURCE);
 }
 
