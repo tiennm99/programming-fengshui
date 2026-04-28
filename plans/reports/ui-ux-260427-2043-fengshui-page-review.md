@@ -36,8 +36,7 @@ Most of §3 shipped (mode-tag move, color-mix card tints, hero-ribbon size bump,
 - **`style.css:81` — subtitle `font-style: italic`** in `Be Vietnam Pro` italic looks slanted-rough on Linux; consider dropping italic in favour of `letter-spacing`. (Also tracked in `todo.md §3`.)
 - **`style.css:124-127, 187-190` — credit + figcaption links use `border-bottom: 1px dotted`** — at small sizes renders sub-pixel. Migrate to native `text-decoration: underline; text-decoration-style: dotted;`. (Also tracked in `todo.md §3`.)
 - **`index.html:83-96` — Credit `<ul>` indent (`margin-left: 1.25rem`) inside centred-h2 panel** looks off. Centre, remove indent, or lay out as a 2-row stack.
-- **`style.css:99-109` — original-image summary marker** uses a webkit-only `::-webkit-details-marker` hack. Add a generic `details > summary { list-style: none; }` for Firefox parity.
-- **`index.html:61` — Disclaimer paragraph** runs the parenthetical "(palette khác hẳn)" at the end of a long line. Split into two sentences for mobile readability.
+- **`index.html:61` — Disclaimer paragraph** trailing `(palette khác hẳn)` reads clunky on mobile. Already 3 sentences; either drop the parenthetical or replace with a clear sentence ("Hai nguồn dùng palette khác nhau.").
 
 ---
 
@@ -84,5 +83,5 @@ Skip-link, lang attr, ribbon ARIA, focus-visible rings, reduced-motion all PASS.
 - `/config/workspace/tiennm99/programming-fengshui/data/gitlab-colors.json`
 - `/config/workspace/tiennm99/programming-fengshui/plans/reports/visuals/ui-ux-260427-2043/contrast-analysis.txt` — full per-chip pre-fix ratio dump
 
-**Status:** DONE_WITH_CONCERNS (post-cleanup snapshot)
-**Summary:** Top-3 critical fixes shipped. Remaining items are §3/§4 polish (anchor underlines, h3 hierarchy, italic subtitle, credit list density, Firefox `details` marker, disclaimer split), §6 nice-to-haves (OG image, Top-5 peek, lunar texture), and §7 open product questions (5-col symbolism, empty KIM card, URL persistence, GitLab disparity tooltip, AA contrast policy).
+**Status:** DONE_WITH_CONCERNS (post-cleanup snapshot — re-verified 2026-04-28)
+**Summary:** Top-3 critical fixes shipped. Remaining items are §3/§4 polish (anchor underlines, h3 hierarchy, italic subtitle, credit list density, disclaimer parenthetical, pale-chip edge, optional chip role=list), §6 nice-to-haves (OG image, Top-5 peek, lunar texture), and §7 open product questions (5-col symbolism, empty KIM card, URL persistence, GitLab disparity tooltip, AA contrast policy). Firefox `details` marker is already covered by inline `list-style: none` on each summary (false-positive in original review).
