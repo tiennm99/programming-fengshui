@@ -130,7 +130,7 @@ body {
 .original-image figcaption a:hover { color: var(--gold); text-decoration-color: var(--gold); }
 
 /* ---------- Section headings ---------- */
-.elements h2, .credit h2 {
+.elements h2 {
   text-align: center; color: var(--accent);
   margin: 1.75rem 0 1rem; font-weight: 700; letter-spacing: 0.3px;
 }
@@ -197,26 +197,6 @@ body {
 .card.tho  h3, .card.tho  .card-count { color: var(--tho);  }
 
 .disclaimer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 1rem; }
-
-/* ---------- Credit ---------- */
-.credit {
-  margin-top: 2.5rem; background: var(--card-bg);
-  border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 1.25rem 1.4rem 1.4rem; box-shadow: var(--shadow-sm);
-}
-.credit p { margin: 0.4rem 0; }
-.credit ul { margin: 0.5rem 0 0.75rem; padding-left: 1.25rem; }
-.credit a {
-  color: var(--accent-ink);
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-decoration-color: var(--accent);
-  text-underline-offset: 2px;
-  transition: color 0.15s ease, text-decoration-color 0.15s ease;
-}
-.credit a:hover { color: var(--gold); text-decoration-color: var(--gold); }
-.credit a:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: 3px; }
-.credit .note { font-size: 0.85rem; color: var(--muted); font-style: italic; }
 
 /* ---------- Debug panel disclosure ---------- */
 #debug-panel > summary {
