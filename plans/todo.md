@@ -43,5 +43,4 @@ From `plans/reports/ui-ux-260427-2043-fengshui-page-review.md` §7:
 - `plans/reports/researcher-260427-0855-github-language-colors.md` — GitHub Linguist data source rationale.
 - `plans/reports/researcher-260427-1024-gitlab-colors-source.md` — GitLab data source.
 - `plans/reports/brainstorm-260427-1046-kim-rebalance.md` — explains the current L≥70 "metallic shine" KIM rule.
-- `plans/reports/uiux-260427-0927-audit-improvements.md` — first-pass UI audit (most items shipped).
-- `plans/reports/ui-ux-260427-2043-fengshui-page-review.md` — most recent review; top-3 critical fixes shipped, polish items partly shipped.
+- `plans/reports/ui-ux-260427-2043-fengshui-page-review.md` — most recent review; top-3 critical fixes shipped, polish items partly shipped (live UX baseline; supersedes the dropped first-pass audit).
