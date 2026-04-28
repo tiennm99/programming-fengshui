@@ -138,6 +138,18 @@ body {
   text-align: center; font-size: 0.85rem; font-style: italic;
   color: var(--muted); font-weight: 400; margin: -0.5rem 0 1rem;
 }
+.source-note {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  background: var(--bg-tint);
+  color: var(--accent-ink);
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
 
 /* ---------- Card grid ---------- */
 /* Grid stays auto-fit (not forced 5-col) — the Ngũ-Hành wheel reads at any

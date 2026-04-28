@@ -39,10 +39,15 @@ function buildChip(name, color, { rank = null } = {}) {
 
 export function renderGrid(buckets, mountEl) {
   if (!mountEl) return;
+  // In TIOBE view, skip cards with zero TIOBE-ranked langs — empty
+  // "0 ngôn ngữ" headings look broken. All-langs view always shows
+  // every element so the Ngũ Hành wheel stays intact.
+  const showAll = mountEl.closest('.elements')?.classList.contains('show-all') ?? false;
   const fragment = document.createDocumentFragment();
   for (const { key, label } of ELEMENTS) {
     const langs = buckets[key] || [];
     const tiobeCount = langs.filter((l) => l.rank).length;
+    if (!showAll && tiobeCount === 0) continue;
     const card = document.createElement('article');
     card.className = `card ${key}`;
     const h3 = document.createElement('h3');

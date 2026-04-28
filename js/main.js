@@ -28,12 +28,34 @@ const SORT_OPTIONS = [
   { key: 'hue', label: 'Cầu vồng' },
 ];
 
+// Short keys keep the URL readable when shared.
+const QUERY_KEYS = { source: 's', view: 'v', sort: 'o' };
+
+function readQueryState() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    source: params.get(QUERY_KEYS.source) || DEFAULT_SOURCE,
+    view: params.get(QUERY_KEYS.view) || 'tiobe',
+    sort: params.get(QUERY_KEYS.sort) || 'tiobe',
+  };
+}
+
+function writeQueryParam(key, value, defaultValue) {
+  const params = new URLSearchParams(window.location.search);
+  if (value === defaultValue) params.delete(QUERY_KEYS[key]);
+  else params.set(QUERY_KEYS[key], value);
+  const qs = params.toString();
+  const next = qs ? `?${qs}${window.location.hash}` : window.location.pathname + window.location.hash;
+  history.replaceState(null, '', next);
+}
+
 const refs = {
   grid: null,
   legend: null,
   section: null,
   debug: null,
   sourceTag: null,
+  sourceNote: null,
 };
 
 let lastBuckets = null;
@@ -98,7 +120,22 @@ async function loadAndRender(sourceKey) {
     lastBuckets = buckets;
     applySortAndRender();
     if (refs.legend) refs.legend.textContent = LEGEND_TEXT;
-    if (refs.sourceTag) refs.sourceTag.textContent = `Nguồn: ${source.label} Linguist`;
+    if (refs.sourceTag) {
+      // First child is the text node; preserve the `#source-note` span sibling.
+      const first = refs.sourceTag.firstChild;
+      const tagText = `Nguồn: ${source.label} Linguist `;
+      if (first && first.nodeType === Node.TEXT_NODE) first.nodeValue = tagText;
+      else refs.sourceTag.prepend(document.createTextNode(tagText));
+    }
+    if (refs.sourceNote) {
+      if (sourceKey === 'gitlab') {
+        refs.sourceNote.hidden = false;
+        refs.sourceNote.textContent = '91 ngôn ngữ — palette riêng so với GitHub';
+      } else {
+        refs.sourceNote.hidden = true;
+        refs.sourceNote.textContent = '';
+      }
+    }
     renderDebugPanel({ skipped, borderline }, refs.debug);
   } catch (err) {
     console.error('[programming-fengshui] failed to render modern grid:', err);
@@ -116,29 +153,48 @@ function init() {
   refs.section = section;
   refs.debug = document.getElementById('debug-panel');
   refs.sourceTag = document.getElementById('source-tag');
+  refs.sourceNote = document.getElementById('source-note');
+
+  // Seed toggle defaults from URL query params; clamp unknown values.
+  const initial = readQueryState();
+  const validSource = SOURCES[initial.source] ? initial.source : DEFAULT_SOURCE;
+  const validView = VIEW_OPTIONS.some((o) => o.key === initial.view) ? initial.view : 'tiobe';
+  const validSort = SORT_OPTIONS.some((o) => o.key === initial.sort) ? initial.sort : 'tiobe';
+
+  currentSort = validSort;
+  // Apply view class BEFORE first render so renderGrid sees the right state
+  // (drives the empty-card hide logic in render-elements.js).
+  if (validView === 'all') section?.classList.add('show-all');
+
+  const sourceToggleEl = document.getElementById('source-toggle');
+  sourceToggleEl?.setAttribute('title', 'GitHub có 664 ngôn ngữ; GitLab có 91 và dùng palette riêng');
 
   mountSegmentedControl(
-    document.getElementById('source-toggle'),
+    sourceToggleEl,
     Object.entries(SOURCES).map(([key, s]) => ({ key, label: s.label })),
-    DEFAULT_SOURCE,
-    loadAndRender,
+    validSource,
+    (key) => { writeQueryParam('source', key, DEFAULT_SOURCE); loadAndRender(key); },
     'Nguồn dữ liệu màu',
   );
   mountSegmentedControl(
     document.getElementById('view-toggle'),
     VIEW_OPTIONS,
-    'tiobe',
-    (key) => section?.classList.toggle('show-all', key === 'all'),
+    validView,
+    (key) => {
+      writeQueryParam('view', key, 'tiobe');
+      section?.classList.toggle('show-all', key === 'all');
+      applySortAndRender();
+    },
     'Phạm vi hiển thị ngôn ngữ',
   );
   mountSegmentedControl(
     document.getElementById('sort-toggle'),
     SORT_OPTIONS,
-    'tiobe',
-    (key) => { currentSort = key; applySortAndRender(); },
+    validSort,
+    (key) => { writeQueryParam('sort', key, 'tiobe'); currentSort = key; applySortAndRender(); },
     'Sắp xếp ngôn ngữ',
   );
-  loadAndRender(DEFAULT_SOURCE);
+  loadAndRender(validSource);
 }
 
 if (document.readyState === 'loading') {
