@@ -27,7 +27,6 @@ From `plans/reports/ui-ux-260427-2043-fengshui-page-review.md` §7:
 5. **Strict AA vs decorative chip contrast** — review §2 brought worst cases above AA via the new `pickTextColor`, but a few still hover at 3.5–4.0:1 (Swift, MATLAB). Acceptable for decorative chips? Document the policy.
 
 ### 3. Polish leftovers from the review (none of them blocking)
-- ARIA radio pattern is in place on the segmented controls — recheck with NVDA / VoiceOver if you have access.
 - Anchor link underlines (`.credit a`, `.figure figcaption a`) use `border-bottom: 1px dotted` — at small sizes this can render sub-pixel. Migrate to native `text-decoration: underline; text-decoration-style: dotted;` when convenient.
 - `.hero .subtitle` is italic — Be Vietnam Pro italic at small sizes can look slanted-rough on Linux. Consider dropping italic in favour of letter-spacing.
 - Per-card "Top 5 non-TIOBE peek" when in TIOBE view — additive feature, see review §6.
