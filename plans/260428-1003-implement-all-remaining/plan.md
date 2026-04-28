@@ -15,7 +15,7 @@ Single pass through every remaining item in `plans/todo.md` and the post-cleanup
 
 | # | Title | Status | Items |
 |---|-------|--------|-------|
-| 01 | Style & markup polish | pending | items 5–10, 13, 14, 15 (CSS one-liners + chip role + decision docs) |
+| 01 | Style & markup polish | **done** | items 5–10, 13, 14, 15 (CSS one-liners + chip role + decision docs) |
 | 02 | Functional toggles & tooltip | pending | items 2, 3, 4 (URL persistence, GitLab tooltip, hide empty KIM in TIOBE view) |
 | 03 | Additive features | pending | items 11, 12 (Top-5 non-TIOBE peek, lunar SVG body texture) |
 | 04 | OG social card image | pending | item 1 (generate `assets/og-card.png`, may block on tooling) |

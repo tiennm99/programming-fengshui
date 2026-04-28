@@ -23,6 +23,7 @@ function pickTextColor(hex) {
 function buildChip(name, color, { rank = null } = {}) {
   const span = document.createElement('span');
   span.className = 'chip' + (rank ? ' chip-tiobe' : ' chip-other');
+  span.setAttribute('role', 'listitem');
   span.textContent = name;
   if (color) {
     span.style.background = color;
@@ -53,6 +54,8 @@ export function renderGrid(buckets, mountEl) {
       : `${langs.length} ngôn ngữ`;
     const chips = document.createElement('div');
     chips.className = 'chips';
+    chips.setAttribute('role', 'list');
+    chips.setAttribute('aria-label', `Ngôn ngữ thuộc ${label}`);
     for (const { name, color, rank } of langs) chips.appendChild(buildChip(name, color, { rank }));
     card.append(h3, count, chips);
     fragment.appendChild(card);
